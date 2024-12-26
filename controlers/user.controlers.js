@@ -31,7 +31,7 @@ const postUser = asyncWraper(async (req, res, next) => {
         email,
         role,
         password: hashPassowrd,
-        avatar:req.file.path
+        avatar: req.file ? req.file.path : "null"
     });
     await adduser.save();
 
