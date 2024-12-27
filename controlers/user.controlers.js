@@ -39,7 +39,7 @@ const postUser = asyncWraper(async (req, res, next) => {
         expiresIn: "1m"
     });
 
-    res.status(201).json({ status: "success", data: { token } });
+    res.status(201).json({ status: "success", data: {...adduser, token } });
 });
 
 const login = asyncWraper(async (req, res, next) => {
