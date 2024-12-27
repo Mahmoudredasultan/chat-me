@@ -35,9 +35,7 @@ const postUser = asyncWraper(async (req, res, next) => {
     });
     await adduser.save();
 
-    const token = jwt.sign({ name, email }, process.env.secrit_key, {
-        expiresIn: "1m"
-    });
+    const token = jwt.sign({ name, email }, process.env.secrit_key);
 
     res.status(201).json({ status: "success", data: {...adduser._doc, token } });
 });
