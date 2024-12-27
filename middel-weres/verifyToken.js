@@ -1,7 +1,7 @@
 const AppError = require("../utilites/AppError.js");
 const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
-    const authHeader =
+    const authHeader = 
         req.headers["Authorization"] || req.headers["authorization"];
     if (!authHeader) {
         const error = AppError.create(

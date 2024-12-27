@@ -2,8 +2,10 @@ const chatModle = require("../mongooseModels/chat.model.js");
 const userModle = require("../mongooseModels/mongoose.models.js");
 const asyncWraper = require("../middel-weres/asyncWraper.js");
 const AppError = require("../utilites/AppError.js");
+const jwt =require("jsonwebtoken")
 const getChat = asyncWraper(async (req, res, next) => {
-    const name = req.params.name;
+  console.log(req.data)
+    const name = req.data.name;
     const chates = await chatModle.find({ participants: name });
     console.log(name, chates);
     res.json({ status: "success", data: chates });
