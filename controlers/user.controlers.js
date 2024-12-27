@@ -81,6 +81,6 @@ const login = asyncWraper(async (req, res, next) => {
         { name, email: account.email, role },
         process.env.secrit_key
     );
-    res.json({ status: "success", data: { tok } });
+    res.json({ status: "success", data: { tokin:tok,...account._doc } });
 });
 module.exports = { getAllUsers, postUser, login };
