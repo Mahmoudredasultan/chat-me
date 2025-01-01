@@ -46,7 +46,7 @@ const login = asyncWraper(async (req, res, next) => {
     if (!trueEmail) {
         const error1 = AppError.create(
             "this email is not true check your email",
-            500,
+            401,
             "error"
         );
         return next(error1);
@@ -56,7 +56,7 @@ const login = asyncWraper(async (req, res, next) => {
     if (!email || !password) {
         const er = AppError.create(
             "this data is not accepted please check your email or password",
-            500,
+            401,
             "error"
         );
         return next(er);
@@ -65,7 +65,7 @@ const login = asyncWraper(async (req, res, next) => {
     if (!account) {
         const error = AppError.create(
             "ther,s no account by that email",
-            500,
+            401,
             "error"
         );
         return next(error);
