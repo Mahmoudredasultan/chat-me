@@ -2,9 +2,9 @@ const chatModle = require("../mongooseModels/chat.model.js");
 const userModle = require("../mongooseModels/mongoose.models.js");
 const asyncWraper = require("../middel-weres/asyncWraper.js");
 const AppError = require("../utilites/AppError.js");
-const jwt =require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const getChat = asyncWraper(async (req, res, next) => {
-  console.log(req.data)
+    console.log(req.data);
     const name = req.data.name;
     const chates = await chatModle.find({ participants: name });
     console.log(name, chates);
@@ -12,7 +12,7 @@ const getChat = asyncWraper(async (req, res, next) => {
 });
 
 const postChat = asyncWraper(async (req, res, next) => {
-    const { participants, chatType, admins } = req.body;
+    const { participants, chatType, admins, chatName } = req.body;
     if (participants.length > 2 && chatType === "SINGLE") {
         const error = AppError.create(
             "this chat must to be with single pirson",
@@ -70,12 +70,21 @@ const postChat = asyncWraper(async (req, res, next) => {
             }
         }
     }
+    if (chatType === "GROUP" && !chatName) {
+        const error = AppError.create("ther's no group name", 404, "fail");
+        return next(error);
+    }
     const checkChat = await chatModle.findOne({ participants });
     if (checkChat) {
         const myer = AppError.create("this chat is oridy exsist ", 404, "fail");
         return next(myer);
     }
-    const addChat = new chatModle({ participants, chatType, admins });
+    const addChat = new chatModle({
+        participants,
+        chatType,
+        admins,
+        chatName: chatName && chatType === "GROUP" ? chatName : null
+    });
     await addChat.save();
     res.status(201).json({ status: "success", data: addChat });
 });

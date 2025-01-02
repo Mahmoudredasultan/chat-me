@@ -7,9 +7,16 @@ const schema = mongoose.Schema({
             require: true
         }
     ],
-    admins:[{
-      type:String
-    }],
+    chatName: {
+        type: mongoose.Schema.Types.Mixed,
+        required: false,
+        default: null
+    },
+    admins: [
+        {
+            type: String
+        }
+    ],
     chatType: {
         type: String,
         required: true,
